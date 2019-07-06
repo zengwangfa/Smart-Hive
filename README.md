@@ -15,7 +15,7 @@
 
 ## 通讯示意结构
 
-![Communicatiom Structure](/docs/pictures/structure.jpg)
+![Communicatiom Structure](/docs/pictures/Communication_Structure.jpg)
 
 ## 软件设计说明
 
@@ -28,7 +28,7 @@
 
 #### 整体结构图
 
-![System Structure](/docs/pictures/系统结构设计.png)
+![System Structure](/docs/pictures/System_Structure.png)
 
 - 主要功能为：采集外围设备数据（温度、重量、编号），将数据按照规定协议打包成**CJSO**数据格式，通过**433M**无线模块向**网关**上传数据，接收来自433M无线模块的控制数据包，进行外设的控制（加热控制、喂食控制、清洗控制）。
 
