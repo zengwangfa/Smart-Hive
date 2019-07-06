@@ -26,13 +26,15 @@
 
 - 该软件使用的平台为RT-Thread 3.0物联网操作系统，采用6LoWPAN物联网协议**6LoWPAN** (IPv6 over Low-Power Wireless Personal Area Networks) 作为物联网的一种协议方式。使用这项技术，所有节在点网络层通过 **IPv6**联系起来。
 
-- 整体结构图
+#### 整体结构图
 
 ![System Structure](/docs/pictures/系统结构设计.png)
 
 - 主要功能为：采集外围设备数据（温度、重量、编号），将数据按照规定协议打包成**CJSO**数据格式，通过**433M**无线模块向**网关**上传数据，接收来自433M无线模块的控制数据包，进行外设的控制（加热控制、喂食控制、清洗控制）。
 
+#### 程序简易流程图
 ![Flow Chart](/docs/pictures/Flow_Chart.png)
 
+#### Web端显示
 ![Flow Chart](/docs/pictures/web1.jpg)
 ![Flow Chart](/docs/pictures/web2.png)
