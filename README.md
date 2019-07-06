@@ -1,4 +1,5 @@
 # 智能蜂箱系统
+
 ## 一、项目概述
 
 | 硬件 | 描述 |
@@ -13,15 +14,15 @@
 
 
 
-## 通讯示意结构
+## 二、通讯示意结构
 
 ![Communicatiom Structure](/docs/pictures/Communication_Structure.jpg)
 
-## 软件设计说明
+## 三、软件设计说明
 
 - 编译环境：IAR 8.30
 - 运行平台：STM32F405RGT6
-- 所使用的的操作系统：RT-Thread物联网系统
+- 所使用的的操作系统：RT-Thread
 
 
 - 该软件使用的平台为RT-Thread 3.0物联网操作系统，采用6LoWPAN物联网协议**6LoWPAN** (IPv6 over Low-Power Wireless Personal Area Networks) 作为物联网的一种协议方式。使用这项技术，所有节在点网络层通过 **IPv6**联系起来。
@@ -37,4 +38,5 @@
 
 #### Web端显示
 ![Flow Chart](/docs/pictures/web1.jpg)
+
 ![Flow Chart](/docs/pictures/web2.png)
