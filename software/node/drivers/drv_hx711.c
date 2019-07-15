@@ -39,6 +39,8 @@
 #define HX711_LED_PIN               55
 #define HX711_KEY_PIN               28
 
+#define FLASH_KEY_PIN               29
+
 #define HX711_DT(pin)               rt_pin_read(pin)
 #define HX711_SCK_HIGH(pin)         rt_pin_write(pin, PIN_HIGH)
 #define HX711_SCK_LOW(pin)          rt_pin_write(pin, PIN_LOW)
@@ -51,7 +53,7 @@
 
 
 /*----------------------- Variable Declarations -----------------------------*/
-static struct button btn;
+static struct button btn,btn2;
 
 uint32_t var_min[2]={999999999,999999999};  //比这个值小 记为归一化最小值  -2147483648～+2141483647
 
@@ -277,11 +279,26 @@ void hx711_key_callback(void *btn)
         }
     }
 }
-
+void flash_key_callback(void *btn)
+{
+    uint32_t btn_event_val; 
+    
+    btn_event_val = get_button_event((struct button *)btn); 
+    
+    if(btn_event_val == SINGLE_CLICK)
+    {
+       ef_port_erase(FLASH_INIT_ADDRESS,4); //擦除FLASH
+    }
+}
 
 static uint8_t hx711_key_read(void) 
 {
     return rt_pin_read(HX711_KEY_PIN); 
+}
+
+static uint8_t flash_key_read(void) 
+{
+    return rt_pin_read(FLASH_KEY_PIN); 
 }
 
 void hx711_key_thread_entry(void* p)
@@ -321,6 +338,11 @@ static int hx711_init(void)
     button_init(&btn, hx711_key_read, PIN_LOW);
     button_attach(&btn, SINGLE_CLICK, hx711_key_callback);
     button_start (&btn);
+    
+    rt_pin_mode(FLASH_KEY_PIN, PIN_MODE_INPUT); 
+    button_init(&btn2, flash_key_read, PIN_LOW);
+    button_attach(&btn2, SINGLE_CLICK, flash_key_callback);
+    button_start (&btn2);  
     
     rt_thread_t thread = RT_NULL;
     
