@@ -37,9 +37,9 @@
 ![Flow Chart](/docs/pictures/Flow_Chart.png)
 
 #### 实物样机测试
-!{Dome1](/docs/pictures/node1)
+![Dome1](/docs/pictures/node1)
 
-!{Dome1](/docs/pictures/node2)
+![Dome1](/docs/pictures/node2)
 #### Web端显示
 ![Flow Chart](/docs/pictures/web1.jpg)
 
