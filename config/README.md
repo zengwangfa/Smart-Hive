@@ -8,15 +8,14 @@
 
 - 使用SCP将固件传输至/tmp
 - 执行更新命令
-```
+```c
 root@widora:/# cd /tmp
 root@widora:/# sysupgrade openwrt.bin
 ```
 - 执行一次清理操作
-```
+```c
 root@widora:/# firstboot -y
 ```
-
 - 设置root密码为 `123456`
 # 替换、添加配置文件
 
@@ -26,3 +25,5 @@ root@widora:/# firstboot -y
 	- 配置网络
 - 添加`/etc/rc.d/S94gateway` 
 	- 自启动node main.js 
+- 输入`chmod +x /etc/rc.d/S94gateway`  使生效
+	
