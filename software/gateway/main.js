@@ -26,6 +26,14 @@ function publish_client_list() {
 	mqtt_client.publish(conf.id+'/pub/dev_list', JSON.stringify(client_list));
 }
 
+function mqtt_keepalive_client_list()
+{
+	publish_client_list();
+	setTimeout(function(arg1){
+		mqtt_keepalive_client_list();
+	}, 300*1000, null);//五分��
+}
+
 function client_sensor_obs(serialnum){
 	var map_data = client_map.get(serialnum);
 	
@@ -33,6 +41,7 @@ function client_sensor_obs(serialnum){
 		if(data != ''){
 			var send_data = JSON.parse(data);
 			send_data.serialnum = num;
+			console.log(num, 'temp upload!');
 			mqtt_client.publish(conf.id+'/pub/temperature', JSON.stringify(send_data));
 		}
 	});
@@ -41,56 +50,71 @@ function client_sensor_obs(serialnum){
 		if(data != ''){
 			var send_data = JSON.parse(data);
 			send_data.serialnum = num;
+			console.log(num, 'weight upload!');
 			mqtt_client.publish(conf.id+'/pub/weight', JSON.stringify(send_data));
 		}
 	});
 }
 
 coap_server.on('request', function(req, res) {  
-    if(req.url == '/online'){
+    if(req.url == '/online')
+	{
     	var client_serial = req.payload.toString();
     	var data = {};
 
-	if(client_map.size == 0){
-		exec(cmd, function(error, stdout, stderr) {
-		});
-	}
-    	if(client_map.has(client_serial) == false){
+		if(client_map.size == 0)
+		{
+			exec(cmd, function(error, stdout, stderr) 
+			{
+				
+			});
+		}
+    	if(client_map.has(client_serial) == false)
+		{
 			data["serialnum"] = client_serial;
 			data["online"] = 1;
 			data["ip"] = req.rsinfo.address;
 			console.log(client_serial, 'online!');
     		client_map.set(client_serial, data);
-    		publish_client_list();
 			client_sensor_obs(client_serial);
+			publish_client_list();
     	}
-    	else{
+    	else
+		{
     		data = client_map.get(client_serial);
-    		if(data.online == 1){
+    		if(data.online == 1)
+			{
     			//console.log(client_serial, 'clear!');
-		        clearTimeout(data.timer);     
+		        clearTimeout(data.timer);  
+				data.timer = null;
 		    }
-    		else{
+    		else
+			{
     			console.log(client_serial, 'online!');
     			data.online = 1;
     			client_map.set(client_serial, data);
-    			publish_client_list();
     			client_sensor_obs(client_serial);
+				publish_client_list();
     		}
     	}
 	    
-	    data.timer = setTimeout(function(arg1){
+	    data.timer = setTimeout(
+		function(arg1)
+		{
 	        console.log(arg1,"offline!");
 	        data = client_map.get(arg1);
 	        data.online = 0;
+			data.timer = null;
 	        client_map.set(arg1, data);
-	        publish_client_list();
-	    }, 600*1000, client_serial);
+			publish_client_list();
+	    },
+		 600*1000, client_serial);
 	}
 })
 
 coap_server.listen(function() {
-    console.log('server started');
+	mqtt_keepalive_client_list();
+    console.log('coap server started');
 });
 
 mqtt_client.set_callback('connect',function(){
@@ -179,4 +203,12 @@ mqtt_client.set_callback('message',function(topic, message){
 	}
 });
 
+		
 mqtt_client.connect('mqtt://aliyun.nblink-tech.com:1883');
+
+process.on('uncaughtException', function (err) {
+     //打印出错误
+     console.log(err);
+     //打印出错误的调用栈方便调试
+     console.log(err.stack);
+});
