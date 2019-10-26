@@ -43,6 +43,7 @@
 #include <time.h>
 #include "Si446x/si446x_api_lib.h"
 #include <lib/list.h>
+#include <board.h>
 
 /* 发送缓冲区大小 */
 #ifndef RADIO_TRANS_TX_FIFO_SIZE
@@ -93,7 +94,7 @@
 #define RADIO_PKT_MAX_LEN                        127
 #endif
 /* 命令出错次数阈值，超过该次数，则对射频模块进行重新初始化 */
-#define CMD_ERR_THRESHOLD_FOR_REINIT             5
+#define CMD_ERR_THRESHOLD_FOR_REINIT             10
 
 /* 发送数据与接收数据事件 */
 enum {
@@ -180,6 +181,8 @@ static void (*recved_hook)(size_t recv_len);
 static struct trans_stat send_stat = { 0 }, recv_stat = { 0 };
 /* 命令出错计数 */
 static size_t cmd_err_count = 0;
+
+static int send_timeout_cnt = 0;
 
 extern const tRadioConfiguration *pRadioConfiguration;
 extern void si446x_pa_enabled(bool enabled);
@@ -599,9 +602,15 @@ rt_err_t radio_pkt_send_sync(const uint8_t *buf, size_t size) {
         if (rt_event_recv(radio_event, RADIO_TX_FINISH | RADIO_TX_TIMEOUT, RT_EVENT_FLAG_CLEAR | RT_EVENT_FLAG_OR,
                 RT_WAITING_FOREVER, &recved) == RT_EOK) {
             if (recved & RADIO_TX_TIMEOUT) {
+                send_timeout_cnt++;
+                if(send_timeout_cnt == 10)
+                {
+                  NVIC_SystemReset();
+                }
                 result = -RT_ETIMEOUT;
             }
             if (recved & RADIO_TX_FINISH) {
+                send_timeout_cnt = 0;
                 result = RT_EOK;
             }
         } else {
@@ -879,7 +888,8 @@ static void radio_isr_entry(void* parameter) {
             if (cmd_err_count > CMD_ERR_THRESHOLD_FOR_REINIT) {
                 cmd_err_count = 0;
                 log_e("Radio command error count > %d, reinitialize radio.", CMD_ERR_THRESHOLD_FOR_REINIT);
-                radio_hal_init();
+                //radio_hal_init();
+                NVIC_SystemReset();
             } else {
                 /* 重新启动接收 */
                 radio_start_rx(pRadioConfiguration->Radio_ChannelNumber, 0u);

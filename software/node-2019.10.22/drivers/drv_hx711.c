@@ -308,10 +308,10 @@ void hx711_key_thread_entry(void* p)
     while(1)
     {
         /* 5ms */
-        rt_thread_delay(RT_TICK_PER_SECOND/200); 
+        rt_thread_delay(RT_TICK_PER_SECOND/20); 
         button_ticks(); 
         cnt++;
-        if(cnt == 200*60)//60s单片机内 更新重量值
+        if(cnt == 20*60*5)//60s单片机内 更新重量值
         {
             rt_enter_critical();
             weight = hx711_weight_update();

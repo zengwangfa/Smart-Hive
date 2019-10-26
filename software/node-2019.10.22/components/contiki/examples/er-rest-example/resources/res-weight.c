@@ -76,11 +76,9 @@ res_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferr
    * Otherwise the requests must be stored with the observer list and passed by REST.notify_subscribers().
    * This would be a TODO in the corresponding files in contiki/apps/erbium/!
    */
-  char str[50];
+
   float weight = hx711_weight_get();
 
-  sprintf(str,"get_weight:%f---------------------------",weight);
-  rt_kprintf(str);
   unsigned int accept = -1;
   REST.get_header_accept(request, &accept);
 
@@ -112,12 +110,12 @@ res_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferr
 static void
 res_periodic_handler()
 {
-  char str[50] = {0};
+  //char str[50] = {0};
   float weight = hx711_weight_get();
   float change = weight>weight_old?(weight-weight_old):(weight_old-weight);
   
-  sprintf(str,"res_weight:%f---------------------------",weight);
-  rt_kprintf(str);
+  //sprintf(str,"res_weight:%f---------------------------",weight);
+  //rt_kprintf(str);
   
   ++interval_counter;
 

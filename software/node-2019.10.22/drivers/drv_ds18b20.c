@@ -236,7 +236,7 @@ void ds18b20_thread_entry(void* p)
         }
         else{//而后每间隔5*10=50s 更新一次温度值，以防延时打断通讯
           
-            rt_thread_delay(RT_TICK_PER_SECOND*10);//等待0.2s采集一次【该为测试 ，真实为10s】
+            rt_thread_delay(RT_TICK_PER_SECOND*60);//等待0.2s采集一次【该为测试 ，真实为10s】
 
             value[i++] = ds18b20_get_value();
             if(i >= 5){//采集5次
@@ -250,8 +250,8 @@ void ds18b20_thread_entry(void* p)
                 {
                     temp_value = last_temp;//当前值替换成 上一次温度值
                 }
-                rt_kprintf("temp:$%d\r\n",temp_value);
-                //rt_kprintf("last_temp:$%d\r\n",last_temp);
+                //rt_kprintf("temp:$%d\r\n",temp_value);
+
             }
 
         }

@@ -78,7 +78,7 @@ uip_ipaddr_t server_ipaddr;
 static struct etimer et;
 static int random_status = 0;
 
-/* Example URIs that can be queried. */
+/* Example URIs that can be queried.  */
 #define NUMBER_OF_URLS 4
 /* leading and ending slashes only for demo purposes, get cropped automatically when setting the Uri-Path */
 char *service_urls[NUMBER_OF_URLS] =
@@ -122,7 +122,8 @@ PROCESS_THREAD(er_example_client, ev, data) {
     
     /* receives all CoAP messages */
     coap_init_engine();
-    etimer_set(&et, TOGGLE_INTERVAL * CLOCK_SECOND);
+    random_status = random_rand()%20;
+    etimer_set(&et, random_status * CLOCK_SECOND);
 
     while (1) {
         PROCESS_YIELD();

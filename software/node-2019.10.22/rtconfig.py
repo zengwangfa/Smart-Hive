@@ -23,7 +23,7 @@ elif CROSS_TOOL == 'keil':
     EXEC_PATH   = r'C:/Keil_v5'
 elif CROSS_TOOL == 'iar':
     PLATFORM    = 'iar'
-    EXEC_PATH   = r'D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.1'
+    EXEC_PATH   = r'Z:\Software\IAR8.3'
 
 BUILD = 'debug'
 STM32_TYPE = 'STM32F405xx'
