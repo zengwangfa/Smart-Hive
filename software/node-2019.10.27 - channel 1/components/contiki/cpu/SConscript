@@ -1,0 +1,15 @@
+from building import *
+Import('rtconfig')
+
+# get current directory
+cwd     = GetCurrentDir()
+# The set of source files associated with this SConscript file.
+src     = Glob('*.c')
+src    += Glob('radio/*.c')
+src    += Glob('radio/Si446x/*.c')
+
+path    = [cwd]
+
+group = DefineGroup('Contiki', src, depend = [''], CPPPATH = path)
+
+Return('group')
