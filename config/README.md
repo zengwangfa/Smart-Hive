@@ -1,7 +1,7 @@
 # 1.更新U-boot
-- 超级终端 
-	- 波特率57600
-	- 数据流控制无
+- **超级终端**
+	- 波特率：57600
+	- 数据流控制：无
 uboot按7进入烧写，以`kermit`协议发送文件，如下图
 [uboot](../docs/pictures/uboot.png)
 
@@ -14,7 +14,7 @@ uboot按7进入烧写，以`kermit`协议发送文件，如下图
 root@widora:/# cd /tmp
 root@widora:/# sysupgrade openwrt.bin
 ```
-- 执行一次清理操作
+- 烧写系统结束后，执行一次清理操作
 ```c
 root@widora:/# firstboot -y
 ```
@@ -22,8 +22,10 @@ root@widora:/# firstboot -y
 # 3.替换、添加配置文件
 
 - 3.1 添加gateway文件夹至 `/root/`中  
+	- 不同网关编号修改 config.js中的 GW000X号
 - 3.2 替换`/etc/6lbr/6lbr.conf`   
-	- 配置串口	
+	- 配置串口： /dev/ttyS1（与STM32对应）
+	- 配置波特率： 230400  （与STM32对应）
 - 3.3 替换`/etc/config/network`
 	- 配置网络
 - 3.4 添加`/etc/rc.d/S94gateway` 
