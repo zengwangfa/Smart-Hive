@@ -21,16 +21,21 @@ root@widora:/# firstboot -y
 
 # 3.替换、添加配置文件
 
-- 3.1 添加gateway文件夹至 `/root/`中  
+## 3.1 添加网关服务程序
+- 添加gateway文件夹至 `/root/`目录下  
 	- 不同网关编号修改 config.js中的 GW000X号
-- 3.2 替换`/etc/6lbr/6lbr.conf`   
-	- 配置串口： /dev/ttyS1（与STM32对应）
+## 3.2 配置串口
+- 替换`/etc/6lbr/6lbr.conf`   
+	- 配置串口设备： /dev/ttyS1（与STM32对应）
 	- 配置波特率： 230400  （与STM32对应）
-- 3.3 替换`/etc/config/network`
-	- 配置网络
-- 3.4 添加`/etc/rc.d/S94gateway` 
+## 3.3 配置网络
+- 替换`/etc/config/network`
+
+## 3.4 添加自启动脚本
+- 添加`/etc/rc.d/S94gateway` 
 	- 自启动node main.js 
-- 3.5 输入`chmod +x /etc/rc.d/S94gateway`  使生效
+	
+- 输入`chmod +x /etc/rc.d/S94gateway`  使脚本生效
 
 
 # 4.开启wifi

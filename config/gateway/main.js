@@ -76,6 +76,58 @@ coap_server.on('request', function(req, res) {
 			data["ip"] = req.rsinfo.address;
 			console.log(client_serial, 'online!');
     		client_map.set(client_serial, data);
+    	}
+    	else
+		{
+    		data = client_map.get(client_serial);
+    		if(data.online == 1)
+			{
+    			//console.log(client_serial, 'clear!');
+		        clearTimeout(data.timer);  
+				data.timer = null;
+		    }
+    		else
+			{
+    			console.log(client_serial, 'online!');
+    			data.online = 1;
+    			client_map.set(client_serial, data);
+    		}
+    	}
+		client_sensor_obs(client_serial);
+		publish_client_list();
+	    
+	    data.timer = setTimeout(
+		function(arg1)
+		{
+	        console.log(arg1,"offline!");
+	        data = client_map.get(arg1);
+	        data.online = 0;
+			data.timer = null;
+	        client_map.set(arg1, data);
+			publish_client_list();
+	    },
+		 600*1000, client_serial);
+		 res.code = '2.05';
+	}
+	else if(req.url == '/keepalive')
+	{
+		var client_serial = req.payload.toString();
+    	var data = {};
+
+		if(client_map.size == 0)
+		{
+			exec(cmd, function(error, stdout, stderr) 
+			{
+				
+			});
+		}
+    	if(client_map.has(client_serial) == false)
+		{
+			data["serialnum"] = client_serial;
+			data["online"] = 1;
+			data["ip"] = req.rsinfo.address;
+			console.log(client_serial, 'online!');
+    		client_map.set(client_serial, data);
 			client_sensor_obs(client_serial);
 			publish_client_list();
     	}
@@ -109,6 +161,7 @@ coap_server.on('request', function(req, res) {
 			publish_client_list();
 	    },
 		 600*1000, client_serial);
+		 res.code = '2.05';
 	}
 })
 
