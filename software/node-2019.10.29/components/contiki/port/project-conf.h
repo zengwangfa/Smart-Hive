@@ -36,7 +36,7 @@
 /*---------------------------------------------------------------------------*/
 /* Change to match your configuration */
 #define IEEE802154_CONF_PANID                 0xABCD
-#define RF_CORE_CONF_CHANNEL                  1
+#define RF_CORE_CONF_CHANNEL                  2
 #define RF_CORE_CONF_DATARATE_20K             1
 #define RF_CORE_CONF_DATARATE_10K             0
 #define RF_CORE_CONF_DATARATE_4800            0

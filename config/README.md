@@ -23,7 +23,8 @@ root@widora:/# firstboot -y
 
 ## 3.1 添加网关服务程序
 - 添加gateway文件夹至 `/root/`目录下  
-	- 不同网关编号修改 config.js中的 GW000X号
+	- 不同网关编号修改 conf.js中的 GW000X号
+
 ## 3.2 配置串口
 - 替换`/etc/6lbr/6lbr.conf`   
 	- 配置串口设备： /dev/ttyS1（与STM32对应）
