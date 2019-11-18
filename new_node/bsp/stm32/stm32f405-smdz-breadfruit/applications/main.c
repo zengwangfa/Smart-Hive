@@ -12,7 +12,9 @@
 #include <rtdevice.h>
 #include <board.h>
 #include "radio_hal.h"
+#include "spi_flash.h"
 
+rt_spi_flash_device_t nor_flash;
 
 int main(void)
 {

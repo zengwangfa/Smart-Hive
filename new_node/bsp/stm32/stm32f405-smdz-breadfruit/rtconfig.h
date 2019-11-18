@@ -73,6 +73,24 @@
 
 /* Device virtual file system */
 
+#define RT_USING_DFS
+#define DFS_USING_WORKDIR
+#define DFS_FILESYSTEMS_MAX 2
+#define DFS_FILESYSTEM_TYPES_MAX 2
+#define DFS_FD_MAX 4
+#define RT_USING_DFS_ELMFAT
+
+/* elm-chan's FatFs, Generic FAT Filesystem Module */
+
+#define RT_DFS_ELM_CODE_PAGE 437
+#define RT_DFS_ELM_WORD_ACCESS
+#define RT_DFS_ELM_USE_LFN_3
+#define RT_DFS_ELM_USE_LFN 3
+#define RT_DFS_ELM_MAX_LFN 255
+#define RT_DFS_ELM_DRIVES 2
+#define RT_DFS_ELM_MAX_SECTOR_SIZE 512
+#define RT_DFS_ELM_REENTRANT
+#define RT_USING_DFS_DEVFS
 
 /* Device Drivers */
 
@@ -83,6 +101,8 @@
 #define RT_SERIAL_RB_BUFSZ 64
 #define RT_USING_PIN
 #define RT_USING_SPI
+#define RT_USING_SFUD
+#define RT_SFUD_USING_SFDP
 #define RT_USING_HWCRYPTO
 #define RT_HWCRYPTO_DEFAULT_NAME "hwcryto"
 #define RT_HWCRYPTO_IV_MAX_SIZE 16
@@ -119,6 +139,11 @@
 
 /* RT-Thread online packages */
 
+/* system packages */
+
+/* RT-Thread GUI Engine */
+
+
 /* IoT - internet of things */
 
 
@@ -128,9 +153,6 @@
 
 
 /* Wiced WiFi */
-
-
-/* IoT Cloud */
 
 
 /* security packages */
@@ -145,16 +167,10 @@
 /* tools packages */
 
 
-/* system packages */
-
-
-/* peripheral libraries and drivers */
-
-
 /* miscellaneous packages */
 
 
-/* samples: kernel and components samples */
+/* example package: hello */
 
 #define SOC_FAMILY_STM32
 #define SOC_SERIES_STM32F4
