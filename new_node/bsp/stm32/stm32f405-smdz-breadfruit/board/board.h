@@ -20,6 +20,23 @@
 extern "C" {
 #endif
 
+/* Flash 默认分区表 */
+#define RT_PARTITION_DEFAULT_TABLE               \
+{                                                \
+    {                                            \
+        /* EasyFlash Backup Section */           \
+        .name       = "ef_bak",                  \
+        .offset     = 0,                         \
+        .size       = 2 * 1024 * 1024,           \
+        .flags = PARTITION_WRITEABLE,            \
+    }, {                                         \
+        /* Fatfs*/                               \
+        .name       = "fatfs",                   \
+        .offset     = 2 * 1024 * 1024,           \
+        .size       = 14 * 1024 * 1024,          \
+        .flags = PARTITION_WRITEABLE,            \
+    }                                            \
+}
 #define STM32_FLASH_START_ADRESS     ((uint32_t)0x08000000)
 #define STM32_FLASH_SIZE             (1024 * 1024)
 #define STM32_FLASH_END_ADDRESS      ((uint32_t)(STM32_FLASH_START_ADRESS + STM32_FLASH_SIZE))

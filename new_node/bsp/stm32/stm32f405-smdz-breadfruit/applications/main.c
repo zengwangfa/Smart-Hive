@@ -12,12 +12,14 @@
 #include <rtdevice.h>
 #include <board.h>
 #include "radio_hal.h"
-#include "spi_flash.h"
+#include "flash.h"
 
-rt_spi_flash_device_t nor_flash;
 
 int main(void)
 {
+		/* W25Q128 ≥ı ºªØ*/
+		nor_flash_init();
+	
     extern void si446x_for_mcu_init(void);
     si446x_for_mcu_init();
     radio_hal_init();
